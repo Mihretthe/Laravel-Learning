@@ -9,7 +9,9 @@ use App\Http\Requests\UpdateInvoiceRequest;
 use App\Http\Resources\V1\InvoiceResource;
 use App\Http\Resources\V1\InvoiceCollection;
 use Illuminate\Http\Request;
-use App\Services\V1\InvoiceQuery;
+use App\Filters\V1\InvoiceQuery;
+
+
 
 class InvoiceController extends Controller
 {
@@ -22,7 +24,8 @@ class InvoiceController extends Controller
         $queryItem = $filter->transform($request);
 
         if(count($queryItem) != 0){
-            return new InvoiceCollection(Invoice::where($queryItem)->paginate());
+            $invoices = Invoice::where($queryItem)->paginate();
+            return new InvoiceCollection($invoices->appends($request->query()));
         }
 
         return new InvoiceCollection(Invoice::paginate());
