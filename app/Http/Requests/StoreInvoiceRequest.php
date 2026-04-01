@@ -13,7 +13,9 @@ class StoreInvoiceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $user = $this->user();
+
+        return $user != null & $user->tokenCan('create');
     }
 
     /**
@@ -24,11 +26,22 @@ class StoreInvoiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'customerId' => ['required'],
-            'amount' => ['required'],
+            'customerId' => ['required', 'integer'],
+            'amount' => ['required', 'numeric'],
             'status' => ['required', Rule::in('B', 'P', 'V', 'b', 'p', 'v')],
-            'billedDate' => ['required'],
-            'paidDate' => [ 'required', 'nullable'],
+            'billedDate' => ['required', 'date_format:Y-m-d H:i:s'],
+            'paidDate' => ['date_format:Y-m-d H:i:s', 'nullable'],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if($this->customerId){
+        $this->merge([
+            'customer_id' => $this->customerId
+        ]);}
+
+        
+        
     }
 }

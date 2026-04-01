@@ -44,11 +44,7 @@ class CustomerController extends Controller
         return new CustomerResource(Customer::create($request->all()));
     }
 
-    // implementing bulk store
-
-    public function bulkStore(){
-        
-    }
+    
 
     /**
      * Display the specified resource.
