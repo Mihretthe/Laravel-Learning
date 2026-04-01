@@ -31,20 +31,14 @@ class InvoiceController extends Controller
         return new InvoiceCollection(Invoice::paginate());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+    
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreInvoiceRequest $request)
     {
-        //
+        return new InvoiceResource(Invoice::create($request->all()));
     }
 
     /**
@@ -55,20 +49,16 @@ class InvoiceController extends Controller
         return new InvoiceResource($invoice);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Invoice $invoice)
-    {
-        //
-    }
+    
+   
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateInvoiceRequest $request, Invoice $invoice)
     {
-        //
+        // return new InvoiceResource(Invoice::update($request->all()));
+        Invoice::update($request->all());
     }
 
     /**

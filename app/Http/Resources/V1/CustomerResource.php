@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\V1;
 
+use App\Http\Resources\v1\InvoiceResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -24,6 +25,7 @@ class CustomerResource extends JsonResource
         'city' => $this->city,
         'state' => $this->state,
         'postalCode' => $this->postalCode,
+        'invoices'=> InvoiceResource::collection($this->whenLoaded('invoices')),
         
         
         ];

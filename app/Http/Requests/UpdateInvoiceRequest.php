@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateInvoiceRequest extends FormRequest
 {
@@ -12,7 +13,7 @@ class UpdateInvoiceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,8 +23,24 @@ class UpdateInvoiceRequest extends FormRequest
      */
     public function rules(): array
     {
+        $method = $this->method();
+
+        if ($method == 'PUT'){
+            return [
+            'customerId' => ['required'],
+            'amount' => ['required'],
+            'status' => ['required', Rule::in('B', 'P', 'V', 'b', 'p', 'v')],
+            'billedDate' => ['required'],
+            'paidDate' => [ 'required', 'nullable'],
+        ];
+        }
+
         return [
-            //
+            'customerId' => [ 'sometimes' ,'required'],
+            'amount' => [ 'sometimes' ,'required'],
+            'status' => [ 'sometimes' ,'required', Rule::in('B', 'P', 'V', 'b', 'p', 'v')],
+            'billedDate' => [ 'sometimes' ,'required'],
+            'paidDate' => [  'sometimes' ,'required', 'nullable'],
         ];
     }
 }
