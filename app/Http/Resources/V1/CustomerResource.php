@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\V1;
 
-use App\Http\Resources\v1\InvoiceResource;
+use App\Http\Resources\V1\InvoiceResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
